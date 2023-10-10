@@ -5,7 +5,6 @@ using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
-[ExecuteAlways]
 public class GridGeneration : MonoBehaviour
 {
     [SerializeField] private GameObject _tile;

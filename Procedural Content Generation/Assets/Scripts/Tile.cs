@@ -39,6 +39,7 @@ public class Tile : MonoBehaviour
     public Vector2Int tileLocation;
     [SerializeField] private List<Sprite> _sprites;
     [SerializeField] private SpriteRenderer _sr;
+    public bool visited = false;
     
     
     public void BreakWall(WallCode wallCode)
@@ -55,12 +56,15 @@ public class Tile : MonoBehaviour
     private void UpdateSprite()
     {
         var index = Convert.ToInt32(((int)tileState).ToString(), 2);
-        Debug.Log(index);
         _sr.sprite = _sprites[index];
     }
     
     private bool CheckIfBinary(int num)
     {
+        if (num < 0)
+        {
+            return false;
+        }
         while (num != 0) {
             if (num % 10 > 1) {
                 return false;
