@@ -10,7 +10,6 @@ public class GridGeneration : MonoBehaviour
     [SerializeField] private GameObject _tile;
     [SerializeField] private Vector2Int _gridSize;
     [SerializeField] private Vector2 _gridBuffer;
-    //[SerializeField] private List<Tile> _grid = new List<Tile>();
     private List<List<Tile>> _grid = new List<List<Tile>>();
 
     private void Awake()

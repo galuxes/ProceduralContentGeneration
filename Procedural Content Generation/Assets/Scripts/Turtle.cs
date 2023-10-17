@@ -21,6 +21,8 @@ public class Turtle : MonoBehaviour
     [SerializeField] private List<Tile> _queue;
     private Vector2Int _currLocation = Vector2Int.zero, _gridSize;
     private Tile _currTile;
+    private bool _bfs = false;
+    private float _timeDelay = 0.00000001f;
 
     private Color _defaultColor;
     private void Start()
@@ -31,7 +33,6 @@ public class Turtle : MonoBehaviour
         _queue.Add(_currTile);
         _currTile.visited = true;
         _defaultColor = _currTile.GetComponent<SpriteRenderer>().color;
-        StartCoroutine(BFGrid());
     }
 
     private void UpdateNeighboors()
@@ -157,7 +158,7 @@ public class Turtle : MonoBehaviour
         return false;
     }
     
-    private IEnumerator BFGrid()
+    private IEnumerator MazeGen()
     {
         bool running = true;
         while (running)
@@ -167,15 +168,30 @@ public class Turtle : MonoBehaviour
             {
                 int max = _visitableNeighboors.Count;
                 int ranNum = Random.Range(0, max);
-                //Debug.Log(ranNum);
                 Move(_visitableNeighboors[ranNum]);
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(_timeDelay);
             }
             else
             {
-                running = RecurseQueue();
+                running = _bfs ? RecurseQueue() : RecurseStack();
             }
         }
         Debug.Log("Done");
     }
+
+    public void Run()
+    {
+        StartCoroutine(MazeGen());
+    }
+
+    public void ToggleBFS()
+    {
+        _bfs = !_bfs;
+    }
+
+    public void SetTimeDelay(float newDelay)
+    {
+        _timeDelay = newDelay;
+    }
+    
 }
